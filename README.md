@@ -15,7 +15,7 @@ Mid game
 
 ## Installation
 
-1. Clone or Dowload repository
+1. Clone or Download repository
 2. Install required packages
     ```
     pip install -r requirements.txt
