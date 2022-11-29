@@ -3,9 +3,7 @@ import PySimpleGUI as sg
 
 again = False
 
-board = [68,420,69,180]
-board.sort(reverse=True)
-
+icon = "images\\1461855.ico"
 
 def ReadPoints():
     points = []
@@ -13,8 +11,11 @@ def ReadPoints():
         for line in outfile:
             line = line.strip("\n")
             points.append(int(line))
+
+    points.sort()
     print(points)
-    return points
+    print(points[0:10])
+    return points[0:10]
 
 def WritePoints(score):
     print("wrote points ",score)
@@ -24,16 +25,18 @@ def WritePoints(score):
         print(outfile)
 
 def LeaderBoard():
-    sg.theme('DarkBlue15')
-    layout = [[sg.Button('Exit')]]
+    sg.theme('DarkBlue14')
+    layout = [[sg.Button('Exit',pad=(10,30),button_color="Red")]]
 
     points = ReadPoints()
-    points.sort()
+    points.sort(reverse=True)
     for i in points:
         text = [sg.Text(str(i))]
         layout.insert(0,text)
-
-    window = sg.Window('Leaderboard', layout,resizable=True,size = (450,620))
+    
+    layout.insert(0,[sg.Text("Top 10 Lowest Scores",font=("",14))])
+    
+    window = sg.Window('Leaderboard', layout,resizable=True,size = (350,390),icon=icon)
 
     while True:
         event, values = window.read()
@@ -50,10 +53,10 @@ def BattleShip():
     sg.theme('DarkBlue15')
     layout =    [[sg.Text('BattleShip')],
                 [sg.B('Restart',key="clear",disabled=False), sg.VerticalSeparator(pad=None),sg.Button('Exit'),sg.VerticalSeparator(pad=None),sg.Button('Leaderboard')],
-                [sg.Text("",key="win-text")]]
+                [sg.Text(" ",key="win-text",font=("",20))]]
 
-    width = 8
-    height = 8
+    width = 12
+    height = 12
     cells = []
     #generate all cells
     for i in range(height):
@@ -79,9 +82,8 @@ def BattleShip():
             for j in range(i-1):
                 x += 1
                 ships.append((x,y))
-    icon = "images\\1461855.ico"
 
-    window = sg.Window('BattleShip Game', layout,resizable=True,size = (550,620),icon=icon)
+    window = sg.Window('BattleShip Game', layout,resizable=True,size = (550,645),icon=icon)
     clicks = 0
     won = False
     
